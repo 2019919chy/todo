@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名侦探柯南todoList</title>
+    <link rel="stylesheet" href="西二三轮考核.css">
+</head>
+<body>
+    <div class="list">
+        <div class="list01">
+            <div class="input1"><strong>任务清单:</strong><input type="text" id="list_input1" value="新的任务"></div>
+            <div class="input1_botton"><button id="btn" class="btn">添加任务</button></div>
+        </div>
+        <div class="list02">
+            <div class="input2"><strong>修改任务:<strong><input type="text" id="list_input2" value="任务"></div>
+            <div class="program">
+                <ul class="collection" id="myList">
+                    <!-- <li class="collection_item"><a href="#" class="collection_item1">任务一:</a></li>
+                    <li class="collection_item"><a href="#" class="collection_item1">任务二:</a></li>
+                    <li class="collection_item"><a href="#" class="collection_item1">任务三:</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 控制输入的初始文字变化
+        // 控制第一个文本框
+        var text1=document.getElementById('list_input1')
+        text1.onfocus = function(){
+            if(this.value === '新的任务'){
+                this.value = '';
+            }
+            this.style.color = '#333';
+        }
+        text1.onblur = function(){
+            if(this.value === ''){
+                this.value = '新的任务';
+            }
+            this.style.color = '#999';
+        }
+        // 控制第二个文本框
+        var text2=document.getElementById('list_input2')
+        text2.onfocus = function(){
+            if(this.value === '任务'){
+                this.value = '';
+            }
+            this.style.color = '#333';
+        }
+        text2.onblur = function(){
+            if(this.value === ''){
+                this.value = '任务';
+            }
+            this.style.color = '#999';
+        }
+        //添加新的任务        
+        document.getElementById('btn').onclick = function () {
+            //新创建一个删除按钮，用来删除该项任务
+            var btn=document.createElement("BUTTON");
+            var t=document.createTextNode("删除");
+            btn.className = 'btn'
+	        btn.appendChild(t);
+            
+            var btn1=document.createElement("BUTTON");
+            var t1=document.createTextNode("编辑");
+            btn1.className = 'btn'
+            btn1.appendChild(t1);
+            
+            var div=document.createElement("div");
+            div.appendChild(btn)
+            div.appendChild(btn1)
+
+
+            //将输入的任务内容转移到表单中
+            var node=document.createElement("LI");
+            var input01 = document.getElementById('list_input1').value
+            node.innerHTML = "任务："+ input01;
+	        //var textnode=document.createTextNode(input01);
+            //node.appendChild(textnode);
+            node.appendChild(div)
+            document.getElementById("myList").appendChild(node);
+
+            // 删除任务
+            btn.onclick = function(ev){
+                console.log(ev)
+                del(ev.target)
+            }
+            btn1.onclick = function(ev){
+                edit(ev.target)
+            }
+
+        }
+        // 删除
+        function del(node){
+            node.parentNode.parentNode.remove()
+        }
+
+        // 编辑
+        function edit(node){
+            let temp = node.parentNode.parentNode.firstChild
+            let text =  temp.textContent
+            list_input2.value = text;
+            list_input2.focus()
+            list_input2.onkeydown = function(ev){
+                let num = ev.keyCode;
+    
+                if(num === 13){
+                    temp.textContent = list_input2.value
+                    list_input2.blur()
+                }
+            }   
+        } 
+    </script>
+</body>
+</html>
